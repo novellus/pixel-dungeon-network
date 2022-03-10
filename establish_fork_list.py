@@ -11,7 +11,7 @@ API_cache_location = 'api_cache'
 
 
 def url_to_cache_name(url):
-    return re.sub('[://\.?=]', ',', url)
+    return os.path.join(API_cache_location, re.sub('[://\.?=]', ',', url))
 
 
 def check_for_API_cache(url):
