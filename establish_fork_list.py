@@ -147,12 +147,19 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
     insertion_location = find_tree_node(base_tree, parent_user_name, parent_repo_name)
     assert insertion_location is not None
 
+    # location should always begin with tree root, which we do not need to search for
+    base_user_name = base_tree['api_package']['owner']['login']
+    base_repo_name = base_tree['api_package']['name']
+    base_key = [(base_user_name, base_repo_name)]
+    assert insertion_location[0] == base_key
+    del insertion_location[0]
+
     # acquire parent node
     sub_tree = base_tree
     for insertion_key in insertion_location:
         for fork in sub_tree['forks']:
-            fork_user_name = base_tree['api_package']['owner']['login']
-            fork_repo_name = base_tree['api_package']['name']
+            fork_user_name = fork['api_package']['owner']['login']
+            fork_repo_name = fork['api_package']['name']
             fork_key = [(fork_user_name, fork_repo_name)]
 
             if fork_key == insertion_key:
