@@ -119,21 +119,26 @@ def retrieve_recursive_forks_from_repo_description(user_name, repo_name):
     return retrieve_recursive_forks_from_api_package(api_package)
 
 
+def node_key(node):
+    user_name = node['api_package']['owner']['login']
+    repo_name = node['api_package']['name']
+    key = (user_name, repo_name)
+
+
 def find_tree_node(base_tree, parent_user_name, parent_repo_name):
     # finds node in base_tree
     # returns None is specified node not found in base_tree
 
-    base_user_name = base_tree['api_package']['owner']['login']
-    base_repo_name = base_tree['api_package']['name']
-    current_location = [(base_user_name, base_repo_name)]
+    current_key = node_key(base_tree)
+    parent_key = (parent_user_name, parent_repo_name)
 
-    if base_user_name == parent_user_name and base_repo_name == parent_repo_name:
-        return current_location
+    if current_key == parent_key:
+        return current_key
 
     for fork in base_tree['forks']:
         sub_location = find_tree_node(fork, parent_user_name, parent_repo_name)
         if sub_location is not None:
-            return [current_location] + sub_location
+            return [current_key] + sub_location
 
     return None
 
@@ -148,9 +153,7 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
     assert insertion_location is not None
 
     # location should always begin with tree root, which we do not need to search for
-    base_user_name = base_tree['api_package']['owner']['login']
-    base_repo_name = base_tree['api_package']['name']
-    base_key = (base_user_name, base_repo_name)
+    base_key = node_key(base_tree)
     assert insertion_location[0] == base_key, (insertion_location[0], base_key)
     del insertion_location[0]
 
@@ -158,10 +161,7 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
     sub_tree = base_tree
     for insertion_key in insertion_location:
         for fork in sub_tree['forks']:
-            fork_user_name = fork['api_package']['owner']['login']
-            fork_repo_name = fork['api_package']['name']
-            fork_key = (fork_user_name, fork_repo_name)
-
+            fork_key = node_key(fork)
             if fork_key == insertion_key:
                 sub_tree = fork
                 break
