@@ -43,7 +43,7 @@ def retreive_api_page(url, default_wait_time=github_rate_limit, read_cache=True,
             return cached_data
 
     # no cached value, retrieve fresh data
-    print(f'{time.time():20} retrieving {url}')
+    print(f'{time.time():<20} retrieving {url}')
     ret = requests.get(url)
 
     assert ret.status_code == 200
@@ -75,7 +75,7 @@ def retreive_api_page(url, default_wait_time=github_rate_limit, read_cache=True,
     else:
         wait_time = default_wait_time
 
-    print(f'{time.time():20} waiting {wait_time} seconds')
+    print(f'{time.time():<20} waiting {wait_time} seconds')
     time.sleep(wait_time)
 
     return return_package
