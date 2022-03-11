@@ -105,7 +105,7 @@ def retrieve_recursive_forks_from_api_package(api_package):
         forks_api_packages = retrieve_repo_forks(forks_url)
 
         for fork_api_package in forks_api_packages:
-            tree_data['forks'].append(retrieve_recursive_repo_forks(fork_api_package))
+            tree_data['forks'].append(retrieve_recursive_forks_from_api_package(fork_api_package))
 
     return tree_data
 
