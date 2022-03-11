@@ -119,9 +119,9 @@ def retrieve_recursive_forks_from_repo_description(user_name, repo_name):
     return retrieve_recursive_forks_from_api_package(api_package)
 
 
-def find_tree_data_insertion_location(base_tree, parent_user_name, parent_repo_name):
-    # finds insertion location into base_tree
-    # returns None is specified parent not found in base_tree
+def find_tree_node(base_tree, parent_user_name, parent_repo_name):
+    # finds node in base_tree
+    # returns None is specified node not found in base_tree
 
     base_user_name = base_tree['api_package']['owner']['login']
     base_repo_name = base_tree['api_package']['name']
@@ -131,7 +131,7 @@ def find_tree_data_insertion_location(base_tree, parent_user_name, parent_repo_n
         return current_location
 
     for fork in base_tree['forks']:
-        sub_location = find_tree_data_insertion_location(fork, parent_user_name, parent_repo_name)
+        sub_location = find_tree_node(fork, parent_user_name, parent_repo_name)
         if sub_location is not None:
             return [current_location] + sub_location
 
@@ -144,7 +144,7 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
     # returns modified base_tree
 
     # acquire insertion_location
-    insertion_location = find_tree_data_insertion_location(base_tree, parent_user_name, parent_repo_name)
+    insertion_location = find_tree_node(base_tree, parent_user_name, parent_repo_name)
     assert insertion_location is not None
 
     # acquire parent node
@@ -153,7 +153,7 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
         for fork in sub_tree['forks']:
             fork_user_name = base_tree['api_package']['owner']['login']
             fork_repo_name = base_tree['api_package']['name']
-            fork_key = [(base_user_name, base_repo_name)]
+            fork_key = [(fork_user_name, fork_repo_name)]
 
             if fork_key == insertion_key:
                 sub_tree = fork
@@ -173,8 +173,11 @@ def manually_link_tree_data(user_name, repo_name, parent_user_name, parent_repo_
     # looks up api package for given repo and inserts into tree data
     # requires parent repo to exist (anywhere) in tree_data
 
-    child_tree = retrieve_recursive_forks_from_repo_description(user_name, repo_name)
-    tree_data = insert_tree_data(tree_data, child_tree, parent_user_name, parent_repo_name)
+    # check if node already exists in tree
+    if find_tree_node(tree_data, user_name, repo_name) is None:
+        # create a new child tree for non-existent node, and insert it into the correct location in the tree
+        child_tree = retrieve_recursive_forks_from_repo_description(user_name, repo_name)
+        tree_data = insert_tree_data(tree_data, child_tree, parent_user_name, parent_repo_name)
 
     return tree_data
 
@@ -184,6 +187,16 @@ def manually_link_tree_data(user_name, repo_name, parent_user_name, parent_repo_
 if __name__ == '__main__':
     tree_data = retrieve_recursive_forks_from_repo_description('watabou', 'pixel-dungeon')
     tree_data = manually_link_tree_data('00-Evan', 'shattered-pixel-dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('dachhack', 'SproutedPixelDungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('hmdzl001', 'SPS-PD', 'dachhack', 'SproutedPixelDungeon', tree_data)
+    tree_data = manually_link_tree_data('ConsideredHamster', 'YetAnotherPixelDungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('egoal', 'darkest-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('HappyAlfred', 'fushigi-no-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+
+    # TODO implement gitlab APIs https://gitlab.com/RavenWolfPD/nonameyetpixeldungeon
+    # tree_data = manually_link_tree_data('RavenWolfPD', 'nonameyetpixeldungeon', 'ConsideredHamster', 'YetAnotherPixelDungeon', tree_data)
+
+
 
     # save tree data
     f = open('fork_tree_data.json', 'w')
