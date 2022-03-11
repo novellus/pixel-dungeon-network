@@ -119,10 +119,71 @@ def retrieve_recursive_forks_from_repo_description(user_name, repo_name):
     return retrieve_recursive_forks_from_api_package(api_package)
 
 
+def find_tree_data_insertion_location(base_tree, parent_user_name, parent_repo_name):
+    # finds insertion location into base_tree
+    # returns None is specified parent not found in base_tree
+
+    base_user_name = base_tree['api_package']['owner']['login']
+    base_repo_name = base_tree['api_package']['name']
+    current_location = [(base_user_name, base_repo_name)]
+
+    if base_user_name == parent_user_name and base_repo_name == parent_repo_name:
+        return current_location
+
+    for fork in base_tree['forks']:
+        sub_location = find_tree_data_insertion_location(fork, parent_user_name, parent_repo_name)
+        if sub_location is not None:
+            return [current_location] + sub_location
+
+    return None
+
+
+def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
+    # inserts child_tree into base_tree at specified parent
+    # requires parent to exist in base_tree
+    # returns modified base_tree
+
+    # acquire insertion_location
+    insertion_location = find_tree_data_insertion_location(base_tree, parent_user_name, parent_repo_name)
+    assert insertion_location is not None
+
+    # acquire parent node
+    sub_tree = base_tree
+    for insertion_key in insertion_location:
+        for fork in sub_tree['forks']:
+            fork_user_name = base_tree['api_package']['owner']['login']
+            fork_repo_name = base_tree['api_package']['name']
+            fork_key = [(base_user_name, base_repo_name)]
+
+            if fork_key == insertion_key:
+                sub_tree = fork
+                break
+
+        else:
+            raise ValueError(f"insertion_key is invalid, {insertion_key} from {insertion_location}")
+
+    # insert tree data
+    sub_tree['forks'].append(child_tree)
+
+    return base_tree
+
+
+def manually_link_tree_data(user_name, repo_name, parent_user_name, parent_repo_name, tree_data):
+    # manually links a repo to a parent repo
+    # looks up api package for given repo and inserts into tree data
+    # requires parent repo to exist (anywhere) in tree_data
+
+    child_tree = retrieve_recursive_forks_from_repo_description(user_name, repo_name)
+    tree_data = insert_tree_data(tree_data, child_tree, parent_user_name, parent_repo_name)
+
+    return tree_data
+
+
 # 'watchers_count'
 
 if __name__ == '__main__':
     tree_data = retrieve_recursive_forks_from_repo_description('watabou', 'pixel-dungeon')
+    tree_data = manually_link_tree_data('00-Evan', 'shattered-pixel-dungeon', 'watabou', 'pixel-dungeon', tree_data)
 
     # save tree data
     f = open('fork_tree_data.json', 'w')
