@@ -201,6 +201,13 @@ if __name__ == '__main__':
     tree_data = manually_link_tree_data('ConsideredHamster', 'YetAnotherPixelDungeon', 'watabou', 'pixel-dungeon', tree_data)
     tree_data = manually_link_tree_data('egoal', 'darkest-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
     tree_data = manually_link_tree_data('HappyAlfred', 'fushigi-no-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('3oiDburg', 'WuWuWu', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('rodriformiga', 'pixel-dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('NYRDS', 'remixed-dungeon', 'rodriformiga', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('pseusys', 'PXL610', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('Smujb', 'powered-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('Smujb', 'cursed-pixel-dungeon', 'Smujb', 'powered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('BrightBotTeam', 'DeisticPixelDungeon', 'dachhack', 'SproutedPixelDungeon', tree_data)
 
     # TODO implement gitlab APIs https://gitlab.com/RavenWolfPD/nonameyetpixeldungeon
     # tree_data = manually_link_tree_data('RavenWolfPD', 'nonameyetpixeldungeon', 'ConsideredHamster', 'YetAnotherPixelDungeon', tree_data)
