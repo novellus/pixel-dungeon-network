@@ -150,7 +150,7 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
 
     # acquire insertion_location
     insertion_location = find_tree_node(base_tree, parent_user_name, parent_repo_name)
-    assert insertion_location is not None
+    assert insertion_location is not None, (parent_user_name, parent_repo_name)
 
     # location should always begin with tree root, which we do not need to search for
     base_key = node_key(base_tree)
