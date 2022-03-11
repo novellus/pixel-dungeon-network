@@ -124,6 +124,8 @@ def node_key(node):
     repo_name = node['api_package']['name']
     key = (user_name, repo_name)
 
+    return key
+
 
 def find_tree_node(base_tree, parent_user_name, parent_repo_name):
     # finds node in base_tree
