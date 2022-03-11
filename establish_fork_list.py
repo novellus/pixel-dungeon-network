@@ -135,7 +135,7 @@ def find_tree_node(base_tree, parent_user_name, parent_repo_name):
     parent_key = (parent_user_name, parent_repo_name)
 
     if current_key == parent_key:
-        return current_key
+        return [current_key]
 
     for fork in base_tree['forks']:
         sub_location = find_tree_node(fork, parent_user_name, parent_repo_name)
