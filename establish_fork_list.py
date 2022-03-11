@@ -77,6 +77,7 @@ def retreive_api_page(url, default_wait_time=github_rate_limit, read_cache=True,
     return_package = (data_package, ret.links)
 
     # store cached data for later retrieval
+    print('--D--', url)
     if write_cache:
         print('--A--', url)
         write_API_cache(url, return_package)
