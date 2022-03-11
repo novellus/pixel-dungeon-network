@@ -96,7 +96,7 @@ def retrieve_recursive_forks_from_api_package(api_package):
     # requires API package as input, see below function for entry point with only a repo description
 
     tree_data = {'api_package': api_package,
-                 'forks': [])
+                 'forks': []}
 
     # retrieve recursive data packages, and construct tree data
     if api_package['forks_count'] > 0:
