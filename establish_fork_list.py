@@ -26,12 +26,10 @@ def check_for_API_cache(url):
 
 
 def write_API_cache(url, data_package):
-    print('--B--', url)
     path = url_to_cache_name(url)
     f = open(path, 'w')
     f.write(json.dumps(data_package))
     f.close()
-    print('--C--', url)
 
 
 
@@ -61,6 +59,12 @@ def retreive_api_page(url, default_wait_time=github_rate_limit, read_cache=True,
         print()
         print('text:', ret.text)
 
+    return_package = (data_package, ret.links)
+
+    # store cached data for later retrieval
+    if write_cache:
+        write_API_cache(url, return_package)
+
     # rate limit
     # check specifications from response headers
     headers = ret.headers
@@ -73,14 +77,6 @@ def retreive_api_page(url, default_wait_time=github_rate_limit, read_cache=True,
 
     print(f'{time.time():20} waiting {wait_time} seconds')
     time.sleep(wait_time)
-
-    return_package = (data_package, ret.links)
-
-    # store cached data for later retrieval
-    print('--D--', url)
-    if write_cache:
-        print('--A--', url)
-        write_API_cache(url, return_package)
 
     return return_package
 
