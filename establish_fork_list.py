@@ -208,10 +208,68 @@ if __name__ == '__main__':
     tree_data = manually_link_tree_data('Smujb', 'powered-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
     tree_data = manually_link_tree_data('Smujb', 'cursed-pixel-dungeon', 'Smujb', 'powered-pixel-dungeon', tree_data)
     tree_data = manually_link_tree_data('BrightBotTeam', 'DeisticPixelDungeon', 'dachhack', 'SproutedPixelDungeon', tree_data)
+    tree_data = manually_link_tree_data('Arcnor', 'pixel-dungeon-gdx', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('arfonzocoward', 'dixel-pungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('G2159687', 'ESPD', 'dachhack', 'SproutedPixelDungeon', tree_data)
+    tree_data = manually_link_tree_data('G2159687', 'Easier-Vanilla-Pixel-Dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('TrashboxBobylev', 'experienced-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('TrashboxBobylev', 'Experienced-Pixel-Dungeon-Redone', '00-Evan', 'shattered-pixel-dungeon', tree_data)  # play this
+    tree_data = manually_link_tree_data('Sharku2011', 'GirlsFrontline-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('FthrNature', 'unleashed-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('locastan', 'GoblinsPixelDungeonGradle', 'FthrNature', 'unleashed-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('Smujb', 'harder-sprouted-pd', 'dachhack', 'SproutedPixelDungeon', tree_data)
+    tree_data = manually_link_tree_data('afomins', 'pixel-dungeon-3d', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('Zrp200', 'lustrous-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('Meduris', 'MinecraftPixelDungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('ndachel', 'PD-ice', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('Meduris', 'german-pixel-dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('AnonymousPD', 'OvergrownPixelDungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('AnonymousPD', 'OvergrownPD', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('bilbolPrime', 'SPD', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('etoitau', 'Pixel-Dungeon-Echo', 'bilbolPrime', 'SPD', tree_data)
+    tree_data = manually_link_tree_data('gohjohn', 'phoenix-pixel-dugeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('lighthouse64', 'Random-Dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('cuneytoner', 'PixelDungeonRemake', 'NYRDS', 'remixed-dungeon', tree_data)
+    tree_data = manually_link_tree_data('QuasiStellar', 'Re-Remixed_Dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('umarnobbee', 'Ripped-Pixel-Dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('MarshalldotEXE', 'rivals-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('wolispace', 'soft-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('TrashboxBobylev', 'Summoning-Pixel-Dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('CuteLunaMoon', 'Survival-Pixel-Dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('juh9870', 'TooCruelPixelDungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('keithr-git', 'tunable-pixel-dungeon', 'watabou', 'pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('mango-tree', 'UNIST-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
+    tree_data = manually_link_tree_data('FthrNature', 'unleashed-pixel-dungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
 
-    # TODO implement gitlab APIs https://gitlab.com/RavenWolfPD/nonameyetpixeldungeon
-    # tree_data = manually_link_tree_data('RavenWolfPD', 'nonameyetpixeldungeon', 'ConsideredHamster', 'YetAnotherPixelDungeon', tree_data)
+    # TODO implement gitlab APIs 
+    # https://pixeldungeon.fandom.com/wiki/No_Name_Yet_Pixel_Dungeon#Overview 
+    #   https://gitlab.com/RavenWolfPD/nonameyetpixeldungeon
+    #   tree_data = manually_link_tree_data('RavenWolfPD', 'nonameyetpixeldungeon', 'ConsideredHamster', 'YetAnotherPixelDungeon', tree_data)
 
+    # TODO implement bitbucket APIs
+    # https://pixeldungeon.fandom.com/wiki/Moonshine_Pixel_Dungeon
+    #   https://bitbucket.org/juh9870/moonshine/src/master/
+
+    # source code not available
+    # https://pixeldungeon.fandom.com/wiki/Dungeon_Run_WIP
+    # https://pixeldungeon.fandom.com/wiki/Easier_Pixel_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Easy_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Frog_Pixel_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Hell_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Hell_Dungeon_Rewarded
+    # https://pixeldungeon.fandom.com/wiki/Jojo%27s_Bizarre_Adventure_(%EC%A3%A0%EC%A3%A0%EC%9D%98_%EA%B8%B0%EB%AC%98%ED%95%9C_%EB%8D%98%EC%A0%84)
+    # https://pixeldungeon.fandom.com/wiki/Loot_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Loot_Dungeon_Shattered
+    # https://pixeldungeon.fandom.com/wiki/Lovecraft_Pixel_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Perfect_Pixel_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Pixel_Dungeon_%2B
+    # https://pixeldungeon.fandom.com/wiki/Pixel_Dungeon_2
+    # https://pixeldungeon.fandom.com/wiki/Pixel_Dungeon_Easy_Mode
+    # https://pixeldungeon.fandom.com/wiki/Pixel_Dungeon_Prayers
+    # https://pixeldungeon.fandom.com/wiki/Plugin_Pixel_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Prismatic_Pixel_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Rat_King_Dungeon
+    # https://pixeldungeon.fandom.com/wiki/Shattered_Trap_Dungeon
 
 
     # save tree data
