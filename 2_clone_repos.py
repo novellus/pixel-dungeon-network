@@ -8,16 +8,16 @@ github_rate_limit = 61 # seconds betweeen requests
 repos_folder = 'repos'
 
 
-def clone_folder_name(node):
+def clone_folder_path(node):
     user_name = node['api_package']['owner']['login']
     repo_name = node['api_package']['name']
     name = f'{user_name},{repo_name}'
 
-    return name
+    return os.path.join(repos_folder, name)
 
 
 def clone_repo(node, wait_time=github_rate_limit):
-    destination = os.path.join(repos_folder, clone_folder_name(node))
+    destination = clone_folder_path(node)
     url = node['api_package']['clone_url']
 
     if not os.path.exists(destination):
