@@ -194,6 +194,8 @@ def manually_link_tree_data(user_name, repo_name, parent_user_name, parent_repo_
 # 'watchers_count'
 
 if __name__ == '__main__':
+    # collected manual links from https://pixeldungeon.fandom.com/wiki/Category:Mods on Mar-03-2022
+
     tree_data = retrieve_recursive_forks_from_repo_description('watabou', 'pixel-dungeon')
     tree_data = manually_link_tree_data('00-Evan', 'shattered-pixel-dungeon', 'watabou', 'pixel-dungeon', tree_data)
     tree_data = manually_link_tree_data('dachhack', 'SproutedPixelDungeon', '00-Evan', 'shattered-pixel-dungeon', tree_data)
@@ -270,7 +272,6 @@ if __name__ == '__main__':
     # https://pixeldungeon.fandom.com/wiki/Prismatic_Pixel_Dungeon
     # https://pixeldungeon.fandom.com/wiki/Rat_King_Dungeon
     # https://pixeldungeon.fandom.com/wiki/Shattered_Trap_Dungeon
-
 
     # save tree data
     f = open('fork_tree_data.json', 'w')
