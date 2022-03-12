@@ -32,7 +32,6 @@ def write_API_cache(url, data_package):
     f.close()
 
 
-
 def retreive_api_page(url, default_wait_time=github_rate_limit, read_cache=True, write_cache=True):
     # retrieves a single API page, parses the GET, and returns select data
 
