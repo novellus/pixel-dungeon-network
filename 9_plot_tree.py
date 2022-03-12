@@ -1,6 +1,5 @@
 import graphviz
 import json
-import os
 
 
 def init_graph():
