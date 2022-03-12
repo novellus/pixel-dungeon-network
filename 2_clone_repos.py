@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import time
 
 
@@ -24,6 +25,7 @@ def clone_repo(node, wait_time=github_rate_limit):
         subprocess.run(['git', 'clone', url, destination])
 
         # rate limit
+        print(f'\n{time.time():<20} waiting {wait_time} seconds\n')
         time.sleep(wait_time)
 
 
@@ -36,7 +38,7 @@ def recursively_clone_repos(tree):
         recursively_clone_repos(fork)
 
 
-if __name__ == '__main__'
+if __name__ == '__main__':
     f = open('fork_tree_data.json', 'r')
     tree = json.loads(f.read())
     f.close()
