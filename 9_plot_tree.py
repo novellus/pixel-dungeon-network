@@ -33,10 +33,31 @@ def recursively_add_nodes(tree, graph, parent=None):
         recursively_add_nodes(fork, graph, parent=tree)
 
 
+# move to graph utility
+def prune_uninteresting_repos(tree):
+    # prunes non-interesting repos from the tree
+    # repos are considered interesting if they meet all the following criteria
+    #   repository or one of its forks (recursive) has been modified after forking
+    #   repository still exists at time of writing
+
+
+def prune_uninteresting_commits(tree):
+    # prunes non-interesting nodes from the commit histories
+    # nodes are considered interesting in any of the following cases
+    #   initial commit of the root node
+    #       notably, not the initial commits of the non-root nodes
+    #       their commits are only interesting beginning at their fork-branch points
+    #   latest commit of any node
+    #   branch points (both sides)
+
+
 def main():
     f = open('fork_tree_data.json', 'r')
     tree = json.loads(f.read())
     f.close()
+
+    tree = prune_uninteresting_repos(tree)
+    tree = prune_uninteresting_commits(tree)
 
     graph = init_graph()
     recursively_add_nodes(tree, graph)
