@@ -4,9 +4,11 @@ import pprint
 import re
 import requests
 import time
+from util import acquire_node
+from util import github_rate_limit
+from util import node_uid
 
 
-github_rate_limit = 61 # default seconds betweeen requests. Actual is usually judged by feedback from server
 API_cache_location = 'api_cache'
 
 
@@ -118,28 +120,20 @@ def retrieve_recursive_forks_from_repo_description(user_name, repo_name):
     return retrieve_recursive_forks_from_api_package(api_package)
 
 
-def node_key(node):
-    user_name = node['api_package']['owner']['login']
-    repo_name = node['api_package']['name']
-    key = (user_name, repo_name)
-
-    return key
-
-
 def find_tree_node(base_tree, parent_user_name, parent_repo_name):
     # finds node in base_tree
-    # returns None is specified node not found in base_tree
+    # returns None if specified node not found in base_tree
 
-    current_key = node_key(base_tree)
-    parent_key = (parent_user_name, parent_repo_name)
+    current_uid = node_uid(base_tree)
+    parent_uid = (parent_user_name, parent_repo_name)
 
-    if current_key == parent_key:
-        return [current_key]
+    if current_uid == parent_uid:
+        return [current_uid]
 
     for fork in base_tree['forks']:
         sub_location = find_tree_node(fork, parent_user_name, parent_repo_name)
         if sub_location is not None:
-            return [current_key] + sub_location
+            return [current_uid] + sub_location
 
     return None
 
@@ -154,21 +148,21 @@ def insert_tree_data(base_tree, child_tree, parent_user_name, parent_repo_name):
     assert insertion_location is not None, (parent_user_name, parent_repo_name)
 
     # location should always begin with tree root, which we do not need to search for
-    base_key = node_key(base_tree)
-    assert insertion_location[0] == base_key, (insertion_location[0], base_key)
+    base_uid = node_uid(base_tree)
+    assert insertion_location[0] == base_uid, (insertion_location[0], base_uid)
     del insertion_location[0]
 
     # acquire parent node
     sub_tree = base_tree
-    for insertion_key in insertion_location:
+    for insertion_uid in insertion_location:
         for fork in sub_tree['forks']:
-            fork_key = node_key(fork)
-            if fork_key == insertion_key:
+            fork_uid = node_uid(fork)
+            if fork_uid == insertion_uid:
                 sub_tree = fork
                 break
 
         else:
-            raise ValueError(f"insertion_key is invalid, {insertion_key} from {insertion_location}")
+            raise ValueError(f"insertion_uid is invalid, {insertion_uid} from {insertion_location}")
 
     # insert tree data
     sub_tree['forks'].append(child_tree)

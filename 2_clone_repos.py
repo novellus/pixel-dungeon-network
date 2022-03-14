@@ -2,18 +2,8 @@ import json
 import os
 import subprocess
 import time
-
-
-github_rate_limit = 61 # seconds betweeen requests
-repos_folder = 'repos'
-
-
-def clone_folder_path(node):
-    user_name = node['api_package']['owner']['login']
-    repo_name = node['api_package']['name']
-    name = f'{user_name},{repo_name}'
-
-    return os.path.join(repos_folder, name)
+from util import clone_folder_path
+from util import github_rate_limit
 
 
 def clone_repo(node, wait_time=github_rate_limit):

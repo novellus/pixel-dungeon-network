@@ -1,7 +1,7 @@
 import json
 import os
 import subprocess
-from 2_clone_repos import clone_folder_path
+from util import clone_folder_path
 
 
 def pull_node_commit_history(node):
@@ -56,6 +56,7 @@ def latest_common_commit(parent, child):
 def establish_latest_common_commits(tree):
     # establishes latest commit hashes common to each parent-child pair
     # stores as property of the fork
+    # property does not exist on the root node (no parent)
 
     for fork in tree['forks']:
         try:
