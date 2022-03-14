@@ -1,6 +1,7 @@
 import graphviz
 import json
 from util import acquire_node
+from util import clone_folder_path
 from util import node_uid
 
 
@@ -52,9 +53,14 @@ def prune_uninteresting_repos(tree):
     #   repository or one of its forks (recursive) has been modified after forking
     #   repository still exists at time of writing
 
-    # these repos stopped existing between step 1 and here
-    # TODO fill out after repo cloning finishes
-    tree = delete_node(tree, user_name, repo_name)
+    # these repos do not exist at time of cloning, despite apparent existence in the metadata
+    for node_path in dfs_node_order(tree):
+        node = acquire_node(tree, node_path)
+        if not os.path.exists(clone_folder_path(node)):
+            if not node['forks']:
+                tree = delete_node(tree, *node_path[-1])
+            else:
+                raise ValueError(f'node with children has no cloned repo {node_uid(node)}')
 
     # prunes repos which have not changed since forking
     # use a static search order since we're modifying the tree
