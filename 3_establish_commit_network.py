@@ -78,7 +78,7 @@ def latest_common_commit(parent, child):
     # fallback to timestamps
     earliest_child_timestamp, earliest_child_commit_hash = sorted(child_commit_history)[0]
     for timestamp, commit_hash in sorted(parent_commit_history, reverse=True):
-        if timestamp in < earliest_child_timestamp:
+        if timestamp <= earliest_child_timestamp:
             return (commit_hash, earliest_child_commit_hash)
 
     raise ValueError(f'No common hash found bewtween parent and child {node_uid(parent)} -> {node_uid(child)}\n{parent_commit_history}\n{child_commit_history}')
