@@ -40,11 +40,12 @@ def repo_unchanged(tree, node_path):
     # returns None for the root node
 
     node = acquire_node(tree, node_path)
-    if 'latest_commit_hash_common_with_parent' not in node:
+    if 'fork_points' not in node:
         return None
 
     latest_timestamp, latest_commit_hash = sorted(node['commit_history'])[-1]
-    return node['latest_commit_hash_common_with_parent'] == latest_commit_hash
+    parent_branch_hash, child_branch_hash = node['fork_points']
+    return parent_branch_hash == latest_commit_hash
 
 
 def prune_uninteresting_repos(tree):
@@ -87,9 +88,10 @@ def prune_uninteresting_commits(tree):
         # deduplicate hashes, ignoring downstream timestamps
         interesting_hashes = set()
 
-        if 'latest_commit_hash_common_with_parent' in node:
+        if 'fork_points' in node:
             # incoming branch point
-            interesting_hashes.add(node['latest_commit_hash_common_with_parent'])
+            parent_branch_hash, child_branch_hash = node['fork_points']
+            interesting_hashes.add(child_branch_hash)
         else:
             # root node initial commit
             timestamp, commit_hash = sorted(node['commit_history'])[0]
@@ -97,12 +99,14 @@ def prune_uninteresting_commits(tree):
         
         # outgoing branch points
         for fork in node['forks']:
-            interesting_hashes.add(fork['latest_commit_hash_common_with_parent'])
+            node_branch_hash, fork_branch_hash = fork['fork_points']
+            interesting_hashes.add(node_branch_hash)
 
         # last commit
         timestamp, commit_hash = sorted(node['commit_history'])[-1]
         interesting_hashes.add(commit_hash)
 
+        # compile deduplicated hashes into commit list
         node['interesting_commits'] = []
         for commit in node['commit_history']:
             timestamp, commit_hash = commit
@@ -157,8 +161,8 @@ def graph_repo(node, graph, parent=None):
 
     # graph fork edge
     if parent is not None:
-        commit_hash = node['latest_commit_hash_common_with_parent']
-        graph.edge(commit_uid(parent, commit_hash), commit_uid(node, commit_hash))
+        parent_branch_hash, child_branch_hash = node['fork_points']
+        graph.edge(commit_uid(parent, parent_branch_hash), commit_uid(node, child_branch_hash))
 
 
 def recursively_graph_repos(tree, graph, parent=None):
@@ -172,7 +176,7 @@ def recursively_graph_repos(tree, graph, parent=None):
 
 
 def main():
-    f = open('fork_tree_data.json', 'r')
+    f = open('fork_tree_data_3.json', 'r')
     tree = json.loads(f.read())
     f.close()
 

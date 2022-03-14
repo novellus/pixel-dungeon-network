@@ -36,3 +36,14 @@ def acquire_node(tree, node_path):
             raise ValueError(f"target_uid is invalid, {target_uid} from {node_path}")
 
     return node
+
+
+def count_tree_nodes(tree):
+    # constructs tree data for base repo, recursively traversing all forks
+    # requires API package as input, see below function for entry point with only a repo description
+
+    count = 1
+    for fork in tree['forks']:
+        count += count_tree_nodes(fork)
+
+    return count
