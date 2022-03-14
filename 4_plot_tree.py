@@ -1,5 +1,6 @@
 import graphviz
 import json
+import os
 from util import acquire_node
 from util import clone_folder_path
 from util import node_uid
@@ -7,6 +8,7 @@ from util import node_uid
 
 def delete_node(tree, user_name, repo_name):
     # removes a node from the tree (if it exists), other than the root node
+    # TODO refactor to use acquire_node
 
     target_uid = (user_name, repo_name)
 
@@ -33,6 +35,8 @@ def dfs_node_order(tree, root=[]):
 
     # add root node
     order.append(node_path)
+
+    return order
 
 
 def repo_unchanged(tree, node_path):
