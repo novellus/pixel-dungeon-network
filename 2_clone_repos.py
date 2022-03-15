@@ -4,6 +4,7 @@ import subprocess
 import time
 from util import clone_folder_path
 from util import github_rate_limit
+from util import repos_folder
 
 
 def clone_repo(node, wait_time=github_rate_limit):
